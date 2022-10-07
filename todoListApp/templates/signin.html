@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load socialaccount %}
+{% providers_media_js %}
+{% load static %}
+<head>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+</head>
+
+  
+{% block content %}
+<main class="main__signin">
+    <p class="error">{{error}}</p>
+    
+    <form action="{% url 'signin' %}" method="POST" class="form__signin">
+        <h1 class="login__title">Log in</h1>
+        {% csrf_token %}
+        {{form}}
+        <button class="login__button">
+            LOGIN
+        </button>
+        <a href="{% provider_login_url 'google' %}" class="google_a"><img src="{% static 'googleWHITE.webp' %}" alt="" class="google"></a>
+        
+        
+    </form>
+</main>
+{% endblock %}

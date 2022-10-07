@@ -1,0 +1,34 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TodoList</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <nav>
+        <h1 class="nav__title">TodoList</h1>
+        <ul class="base_ul">
+            {% if user.is_authenticated%}
+            <div class="user_data">
+                <p class="username_user">{{user.username}} {{user.last_name}}</p>
+                <img src="{{user.socialaccount_set.all.0.get_avatar_url}}" alt="" class="user_logo">
+            </div>
+            <li class="base_li cerrar"><a class="base_a" href="{% url 'logout' %}">Cerrar sesion</a></li>
+            {% else %}
+            <li class="base_li"><a class="base_a" href="{% url 'signin' %}">Iniciar sesion</a></li>
+            <li class="base_li"><a class="base_a" href="{% url 'signup' %}">Registrarse</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+
+    {% block content %}      
+    {% endblock content %}
+        
+</body>
+</html>

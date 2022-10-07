@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TodoList</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    
+   
+    
+</head>
+<body >
+    {% block content %}
+    <div class="home_div">
+        <div class="div">
+            <ul class="mytasks_div">
+                
+                <li class="home_li"><a class="home_a" href=""><img src="{% static 'user.png' %}" alt="tasks_alt">My tasks</a></li>
+            </ul>
+            <div class="tasks_container">
+
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {{form}}
+                    <button class="save_button">
+                        <img src="{% static 'send.png' %}" alt="">
+                    </button>
+                </form>
+
+                {% if total == 0%}
+                <img src="{% static '20943650.jpg' %}" alt="" class="ilustracion">
+                <h1 class="logo_h1">You don´t have tasks</h1>
+                {% endif%}
+
+                {% for task in tasks %}
+                <div class="tasks">
+                    
+                    {% if task.completed == True%}
+                    <del><p>{{task.task_name}}</p></del>
+                    {% else %}
+                    
+                    <p>{{task.task_name}}</p> 
+
+                    
+                    {% endif%}
+                    <div class="tasks_buttons">
+                        <form action="{% url 'completed_task' task.id %}" method="POST">
+                            {% csrf_token %}
+                            <button class="completed_button">
+                               <img src="{% static 'check.png' %}" alt="">
+                            </button>
+                        </form>
+
+            
+                        <form action="{% url 'delete_task' task.id %}" method="POST">
+                            {% csrf_token %}
+                            <button class="delete_task">
+                                <img src="{% static 'trash-bin.png' %}" alt="">
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+                
+                <div class="data_tasks">
+                    <p class="data_p">Total tasks: {{total}}</p>
+                    <p class="data_p">Completed tasks: {{completed}}</p>
+        
+                </div>
+            </div>
+            
+        </div>
+    </div>  
+    {% endblock content %}
+</body>
+</html>
